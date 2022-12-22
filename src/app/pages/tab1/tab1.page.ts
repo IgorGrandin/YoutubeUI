@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RefresherCustomEvent } from '@ionic/angular';
 import homeData from '../../../assets/data/home.json'
 
 @Component({
@@ -26,10 +27,23 @@ export class Tab1Page {
     }));
 
     setTimeout(() => {
-      //this.selectSegment(0);
       this.videos = homeData;
-    }, 5000)
-
+    }, 2000);
   };
+
+  selectSegment(index: any){
+    this.segments.map((item) => (item.selected = false));
+    this.segments[index].selected = true;
+  };
+
+  doRefresh(event: RefresherCustomEvent){
+    setTimeout(() => {
+      this.videos = [];
+      setTimeout(() => {
+        this.videos = homeData;
+      }, 2000);
+      event.target.complete();
+    }, 1500);
+  }
 
 }
